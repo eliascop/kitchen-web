@@ -1,0 +1,15 @@
+<h1>Lista de Produtos</h1>
+<button (click)="goToNewProduct()" class="view-button" >Adicionar Produto</button>
+<div *ngIf="products.length > 0" class="item-container">
+    <div *ngFor="let product of products" class="item-card">
+      <div class="item-details">
+        <p class="item-id">Produto {{ product.id }}. {{ product.name }}</p>
+        <p class="item-description">Descrição: {{ product.description }}</p>
+        <p class="item-type">Tipo: {{ product.type }}</p>
+        <p class="item-total">Preço: <span class="highlight">R$ {{ product.price | number: '1.2-2' }}</span></p>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="products.length == 0" class="no-item">
+    <h1>Nenhum produto cadastrado</h1>
+  </div>
