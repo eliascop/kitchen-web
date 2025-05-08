@@ -16,6 +16,7 @@ import { PasswordInputComponent } from '../../shared/components/password-input/p
 
 export class LoginComponent {
   loginForm: FormGroup;
+  errorMessage: string | null = null; 
 
   constructor(private fb: FormBuilder, private router: Router, private userService: UserService, private authService: AuthService) {
     this.loginForm = this.fb.group({
@@ -25,6 +26,7 @@ export class LoginComponent {
   }
 
   onSubmit() {
+    this.errorMessage = null;
     this.userService.login(this.loginForm.value).subscribe({
       next: (res: any) => {
         localStorage.setItem('token', res.jwt);
@@ -32,7 +34,8 @@ export class LoginComponent {
         this.router.navigate(['/']);
       },
       error: (err) => {
-        console.error('Erro ao efetuar login:', err);
+        console.log(err.error);
+        this.errorMessage = err.error?.error || 'Erro ao efetuar login';
       }
     });
   }

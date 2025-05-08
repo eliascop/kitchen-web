@@ -3,6 +3,7 @@
         <h2>Login</h2>
         <input type="text" formControlName="user" placeholder="Usuário" />
         <app-password-input formControlName="password" placeholder="Senha"></app-password-input>
+        <div class="error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
         <button type="submit">Login</button>
     </form>
 </div>

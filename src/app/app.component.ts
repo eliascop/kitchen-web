@@ -48,6 +48,6 @@ export class AppComponent {
     this.router.navigate(['/login']);
   }
   isHomePage(): boolean {
-    return this.router.url === '/';
+    return this.router.url === '/' || this.router.url === '/login' ;
   }
 }

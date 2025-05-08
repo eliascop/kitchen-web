@@ -1,16 +1,17 @@
 import { ApplicationConfig } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import { provideHttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { CartComponent } from './features/cart/cart.component';
-import { TrackingComponent } from './features/tracking/tracking.component';
-import { LoginComponent } from './features/login/login.component';
+import { provideHttpClient, withInterceptorsFromDi, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpInterceptorService } from './core/interceptors/http-interceptor.service';
 import { AuthGuardService } from './core/service/auth.guard.service';
+
+import { LoginComponent } from './features/login/login.component';
 import { HomeComponent } from './features/home/home.component';
+import { CartComponent } from './features/cart/cart.component';
+import { UsersComponent } from './features/users/users.component';
 import { OrdersComponent } from './features/orders/orders.component';
 import { ProductsComponent } from './features/products/products.component';
 import { NewProductComponent } from './features/new-product/new-product.component';
-import { UsersComponent } from './features/users/users.component';
+import { TrackingComponent } from './features/tracking/tracking.component';
 
 export const routes = [
   { path: 'login', component: LoginComponent },
@@ -26,7 +27,7 @@ export const routes = [
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideHttpClient(),
+    provideHttpClient(withInterceptorsFromDi()),
     provideRouter(routes),
     {
       provide: HTTP_INTERCEPTORS,
