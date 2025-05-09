@@ -5,5 +5,8 @@
         <app-password-input formControlName="password" placeholder="Senha"></app-password-input>
         <div class="error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
         <button type="submit">Login</button>
+        <div style="width: 100%; text-align: right;">
+            <a href="#" (click)="newUser($event)">Me cadastrar</a>
+        </div>
     </form>
 </div>

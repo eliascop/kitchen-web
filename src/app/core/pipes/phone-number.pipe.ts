@@ -22,4 +22,11 @@ export class PhoneNumberPipe implements PipeTransform {
     }
   }
 
+  unmask(maskedValue: string): string {
+    if (!maskedValue) {
+      return '';
+    }
+    return maskedValue.replace(/\D/g, '');
+  }
+
 }

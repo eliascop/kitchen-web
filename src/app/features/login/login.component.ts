@@ -39,4 +39,10 @@ export class LoginComponent {
       }
     });
   }
+  newUser(event?: Event){
+    if (event) {
+      event.preventDefault();
+    }
+    this.router.navigate(['/new-user']);
+  }
 }

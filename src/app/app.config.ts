@@ -12,9 +12,12 @@ import { OrdersComponent } from './features/orders/orders.component';
 import { ProductsComponent } from './features/products/products.component';
 import { NewProductComponent } from './features/new-product/new-product.component';
 import { TrackingComponent } from './features/tracking/tracking.component';
+import { NewUserComponent } from './features/new-user/new-user.component';
 
 export const routes = [
   { path: 'login', component: LoginComponent },
+  { path: 'new-user', component: NewUserComponent},
+
   { path: '', component: HomeComponent, canActivate: [AuthGuardService] },
   { path: 'cart', component: CartComponent, canActivate: [AuthGuardService] },
   { path: 'users', component: UsersComponent, canActivate: [AuthGuardService] },

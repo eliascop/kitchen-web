@@ -18,7 +18,7 @@ export class UserService {
 
   login(userData: any): ServiceResponse<User> {
     return this.dataService.post<any>({
-      url: `${AUTH_REST_SERVICE}`,
+      url: `${AUTH_REST_SERVICE}/login`,
       body: userData
     }).pipe(
       map(response => {
@@ -38,6 +38,13 @@ export class UserService {
   getUsers(): ServiceResponse<User[]> {
     return this.dataService.get<User[]>({
       url: `${USER_REST_SERVICE}`
+    });
+  }
+
+  createUser(userData: any): ServiceResponse<User> {
+    return this.dataService.post<User>({
+      url: `${AUTH_REST_SERVICE}/signup`,
+      body: userData,
     });
   }
 }

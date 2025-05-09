@@ -8,7 +8,7 @@ export const environment = {
 
     USER_REST_SERVICE: 'http://192.168.15.179:8082/users/v1',
 
-    AUTH_REST_SERVICE: 'http://192.168.15.179:8082/login',
+    AUTH_REST_SERVICE: 'http://192.168.15.179:8082/auth',
 
     jwtToken: ''
 }
