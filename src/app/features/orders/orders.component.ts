@@ -14,19 +14,17 @@ import { AuthService } from '../../core/service/auth.service';
 })
 export class OrdersComponent implements OnInit{
 
-  userId: number = 1;
   orders: Order[] = [];
   selectedOrder: any = null;
 
-  constructor(private orderService: OrderService, private authService: AuthService) {}
+  constructor(private orderService: OrderService) {}
   
   ngOnInit() {
-    this.userId = this.authService.currentUserId!;
-    this.getOrders(this.userId);
+    this.getOrders();
   }
 
-  getOrders(userId: number) {
-    this.orderService.getOrders(userId).subscribe((data) => {
+  getOrders() {
+    this.orderService.getOrders().subscribe((data) => {
       this.orders = data.data!;
     });
   }

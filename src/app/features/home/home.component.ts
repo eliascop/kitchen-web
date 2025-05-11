@@ -15,6 +15,10 @@ export class HomeComponent {
     this.router.navigate(['/cart']);
   }
 
+  ordersPainel(){
+    this.router.navigate(['/orders-painel']);
+  }
+
   orderList() {
     this.router.navigate(['/orders']);
   }

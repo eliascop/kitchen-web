@@ -1,11 +1,15 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { interval, Subject, throwError } from 'rxjs';
-import { switchMap, takeUntil, catchError, tap } from 'rxjs/operators';
 import { Order } from '../../model/order.model';
 import { CommonModule } from '@angular/common';
+import { OrderSocketService } from '../../core/service/order.socket.service';
 import { OrderService } from '../../core/service/order.service';
-import { HttpErrorResponse } from '@angular/common/http';
+
+const statusMap: Record<string, string> = {
+  PREPARING: 'Seu pedido está sendo preparado',
+  PEDING: 'Seu pedido está aguardando ser preparado',
+  PREPARED: 'Oba! Seu pedido está pronto!',
+};
 
 @Component({
   selector: 'app-tracking',
@@ -17,50 +21,38 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class TrackingComponent implements OnInit, OnDestroy {
   orderId!: number;
   order!: Order;
-  orderFounded: boolean = true;
-  private unsubscribe$ = new Subject<void>();
-  private stopTimer$ = new Subject<void>();
+  statusMessage: string | undefined;
 
   constructor(
     private route: ActivatedRoute,
+    private orderSocketService: OrderSocketService,
     private orderService: OrderService
   ) {}
 
+
   ngOnInit(): void {
     this.orderId = Number(this.route.snapshot.paramMap.get('orderId'));
-
-    interval(5000).pipe(
-      takeUntil(this.unsubscribe$),
-      takeUntil(this.stopTimer$),
-      switchMap(() => this.orderService.getOrderById(this.orderId).pipe(
-        tap(data => {
-          if (data.data?.status === 'PREPARED') {
-            this.stopTimer$.next(); 
-          }
-        }),
-        catchError((error: HttpErrorResponse) => {
-          if (error.status === 404) {
-            this.orderFounded = false;
-            this.stopTimer$.next();
-          }
-          return throwError(() => error);
-        })
-      ))
-    ).subscribe({
-      next: (data) => {
+    if (!this.orderId) {
+      this.statusMessage = 'Pedido inválido.';
+      return;
+    }
+    this.orderService.getOrderById(this.orderId).subscribe(
+      data => {
         this.order = data.data!;
-      },
-      error: (err) => {
-        this.orderFounded = false;
+    });
+    
+    this.orderSocketService.connectToOrder(this.orderId, (orderUpdated) => {
+      this.order = orderUpdated;
+
+      this.statusMessage = statusMap[orderUpdated.status] || 'Aguardando atualização...';
+      if(this.order.status === 'PREPARED'){
+        this.orderSocketService.disconnect();
       }
     });
   }
 
   ngOnDestroy(): void {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
-    this.stopTimer$.next();
-    this.stopTimer$.complete();
+    this.orderSocketService.disconnect();
   }
+  
 }
-

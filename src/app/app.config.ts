@@ -13,6 +13,7 @@ import { ProductsComponent } from './features/products/products.component';
 import { NewProductComponent } from './features/new-product/new-product.component';
 import { TrackingComponent } from './features/tracking/tracking.component';
 import { NewUserComponent } from './features/new-user/new-user.component';
+import { OrdersPainelComponent } from './features/orders-painel/orders-painel.component';
 
 export const routes = [
   { path: 'login', component: LoginComponent },
@@ -22,6 +23,7 @@ export const routes = [
   { path: 'cart', component: CartComponent, canActivate: [AuthGuardService] },
   { path: 'users', component: UsersComponent, canActivate: [AuthGuardService] },
   { path: 'orders', component: OrdersComponent, canActivate: [AuthGuardService] },
+  { path: 'orders-painel', component: OrdersPainelComponent, canActivate: [AuthGuardService] },
   { path: 'products', component: ProductsComponent, canActivate: [AuthGuardService] },
   { path: 'new-product', component: NewProductComponent, canActivate: [AuthGuardService] },
   { path: 'tracking/:orderId', component: TrackingComponent, canActivate: [AuthGuardService] },
