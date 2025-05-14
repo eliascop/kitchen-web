@@ -17,72 +17,83 @@ export const ORDER_SOCKET_SERVICE = environment.ORDER_SOCKET_SERVICE;
 })
 export class OrdersPainelComponent implements OnInit, OnDestroy {
 
-  orders: { [key: string]: Order[] } = {
+  orders: Record<string, Order[]> = {
     PENDING: [],
     PREPARING: [],
     PREPARED: []
   };
+
+  private pendingRecoveryOrderId: number | null = null;
 
   constructor(
     private orderSocketService: OrderSocketService,
     private orderService: OrderService
   ) {}
 
-  ngOnInit() {
-    this.loadOrders();
+  ngOnInit(): void {
+    this.loadInitialOrders();
 
-    this.orderSocketService.connectToAllOrders((orderUpdated) => {
-      this.updateOrderStatus(orderUpdated.orderId, orderUpdated.status);
+    this.orderSocketService.connectToAllOrders(({ id, status }) => {
+      const updated = this.updateOrderStatus(id, status);
+
+      if (!updated) {
+        this.pendingRecoveryOrderId = id;
+        this.recoverAndInsertOrder(id);
+      }
     });
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.orderSocketService.disconnect();
   }
 
-  private updateOrderStatus(orderId: number, newStatus: string) {
-    let movedOrder: Order | undefined;
+  private loadInitialOrders(): void {
+    this.orderService.getOrders().subscribe(response => {
+      this.clearOrders();
+      (response.data || []).forEach(order => this.insertOrder(order));
+    });
+  }
+
+  private clearOrders(): void {
+    for (const key of Object.keys(this.orders)) {
+      this.orders[key] = [];
+    }
+  }
+
+  private insertOrder(order: Order): void {
+    order.blink = true;
+    const status = (order.status || '').toUpperCase();
+    if (!this.orders[status]) {
+      this.orders[status] = [];
+    }
+    this.orders[status] = [...(this.orders[status] || []), order];
+    setTimeout(() => order.blink = false, 5000);
+  }
+
+  private updateOrderStatus(orderId: number, newStatus: string): boolean {
+    for (const statusKey in this.orders) {
+      const orderList = this.orders[statusKey];
+      const order = orderList.find(o => o.id === Number(orderId));
   
-    for (const statusKey of Object.keys(this.orders)) {
-      const currentColumn = this.orders[statusKey];
-      const foundOrder = currentColumn.find(order => order.id === Number(orderId));
-  
-      if (foundOrder) {
-        this.orders[statusKey] = currentColumn.filter(order => order.id !== Number(orderId));
-        
-        foundOrder.status = newStatus;
-  
-        if (!this.orders[newStatus]) {
-          this.orders[newStatus] = [];
-        }
-  
-        this.orders[newStatus].push(foundOrder);
-        return;
+      if (order) {
+        this.orders[statusKey] = orderList.filter(o => o.id !== Number(orderId));
+        order.status = newStatus;
+        this.insertOrder(order);
+        return true;
       }
     }
-  
-    console.warn(`Pedido com ID ${orderId} não encontrado em nenhuma coluna.`);
+    return false;
   }
-  
-  
-  
 
-  private loadOrders(){
-    this.orderService.getOrders().subscribe((data) => {
-      this.orders = {
-        PENDING: [],
-        PREPARING: [],
-        PREPARED: []
-      };
-
-      for (const order of data.data || []) {
-        const status = (order.status || '').toUpperCase();
-        if (this.orders[status]) {
-          this.orders[status].push(order);
-        } else {
-          console.warn(`Status desconhecido: ${status}`, order);
-        }
+  private recoverAndInsertOrder(orderId: number): void {
+    this.orderService.getOrderById(orderId).subscribe(response => {
+      const recoveredOrder = response.data;
+      if (recoveredOrder) {
+        this.insertOrder(recoveredOrder);
+      } else {
+        console.warn(`Pedido ID ${orderId} não encontrado na recuperação.`);
       }
+      this.pendingRecoveryOrderId = null;
     });
   }
 }

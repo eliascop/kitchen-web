@@ -11,6 +11,7 @@ export interface Cart {
     id: number;
     user: {
          id: number 
+         name: string
     };
     items: CartItem[];
     total: number;

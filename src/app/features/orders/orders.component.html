@@ -6,6 +6,7 @@
       <p class="item-date">Data: {{ order.creation | formatDateTime }}</p>
       <p class="item-total">Total: <span class="highlight">R$ {{ order.cart.total | number: '1.2-2' }}</span></p>
       <p class="item-status">Status: <span class="status">{{ order.status }}</span></p>
+      <p>Cliente: <b>{{order.cart.user.name}}</b></p>
       <button class="view-button" (click)="openModal(order)">Ver detalhes</button>
     </div>
   </div>

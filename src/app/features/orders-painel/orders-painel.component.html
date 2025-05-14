@@ -30,7 +30,7 @@
   <div class="column">
     <h2>✅ Pronto</h2>
     <ul id="prepared">
-      <li *ngFor="let order of orders['PREPARED']" [attr.id]="'order-' + order.id">
+      <li *ngFor="let order of orders['PREPARED']" [attr.id]="'order-' + order.id" [ngClass]="{ 'blink': order.blink }">
         Pedido {{ order.id }} - {{ order.creation | formatDateTime}}
         <br>
         <ng-container *ngFor="let item of order.cart.items ">
