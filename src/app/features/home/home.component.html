@@ -2,11 +2,11 @@
     <div class="card">
       <h1 class="title">Painel Principal</h1>
       
-      <button class="btn btn-blue" (click)="newOrder()">Novo Pedido</button>
-      <button class="btn btn-blue" (click)="ordersPainel()">Monitor de Pedido</button>
+      <button class="btn btn-blue" (click)="newOrder()" *ngIf="userProfile!==1">Novo Pedido</button>
+      <button class="btn btn-blue" (click)="ordersPainel()" *ngIf="userProfile==1">Monitor de Pedido</button>
       <button class="btn btn-blue" (click)="orderList()">Listar Pedidos</button>
-      <button class="btn btn-blue" (click)="productList()">Listar Produtos</button>
-      <button class="btn btn-blue" (click)="userList()">Listar Usuários</button>
+      <button class="btn btn-blue" (click)="productList()" *ngIf="userProfile==1">Listar Produtos</button>
+      <button class="btn btn-blue" (click)="userList()" *ngIf="userProfile==1">Listar Usuários</button>
     </div>
   </div>
   

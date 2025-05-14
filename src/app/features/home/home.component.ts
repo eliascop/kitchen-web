@@ -1,15 +1,21 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { User } from '../../model/user.model';
+import { AuthService } from '../../core/service/auth.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
-  constructor(private router: Router) {}
+  userProfile: number | undefined;
+  constructor(authService: AuthService, private router: Router) {
+    this.userProfile = authService.currentUserId!;
+  }
 
   newOrder() {
     this.router.navigate(['/cart']);

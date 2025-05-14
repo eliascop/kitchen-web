@@ -4,8 +4,9 @@ import { jwtDecode } from 'jwt-decode';
 import { BehaviorSubject } from 'rxjs';
 
 export interface AuthUser {
-  id: number;
-  user: string;
+  id: number
+  user: string
+  profile: number
 }
 
 @Injectable({
@@ -18,6 +19,10 @@ export class AuthService {
   get currentUserId(): number | null {
     return this.userSubject.value?.id ?? null;
   }
+
+  get currentUserProfile(): number | null {
+    return this.userSubject.value?.profile ?? null;
+  }
   
   private getUserFromToken(): AuthUser | null {
     const token = this.getToken();
@@ -28,6 +33,7 @@ export class AuthService {
       return {
         id: payload['id'],
         user: payload['sub'],
+        profile: payload['profile']
       };
     } catch (e) {
       return null;
