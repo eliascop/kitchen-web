@@ -4,7 +4,7 @@ export const environment = {
 
     ORDER_REST_SERVICE: 'http://192.168.15.179:8082/orders/v1',
     
-    ORDER_SOCKET_SERVICE: 'http://localhost:8085/ws/orders/v1',
+    ORDER_SOCKET_SERVICE: 'http://192.168.15.179:8085/ws/orders/v1',
 
     PRODUCT_REST_SERVICE: 'http://192.168.15.179:8082/products/v1',
 

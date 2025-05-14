@@ -70,6 +70,11 @@ export class OrdersPainelComponent implements OnInit, OnDestroy {
     setTimeout(() => order.blink = false, 5000);
   }
 
+  private removeOrder(order: Order): void {
+    order.blink = true;
+    this.orders['PREPARED'] = this.orders[order.status].filter(item => item.id !== order.id);
+  }
+
   private updateOrderStatus(orderId: number, newStatus: string): boolean {
     for (const statusKey in this.orders) {
       const orderList = this.orders[statusKey];
@@ -77,6 +82,9 @@ export class OrdersPainelComponent implements OnInit, OnDestroy {
   
       if (order) {
         this.orders[statusKey] = orderList.filter(o => o.id !== Number(orderId));
+        if(newStatus === 'DELIVERED') {
+          this.removeOrder(order);
+        }
         order.status = newStatus;
         this.insertOrder(order);
         return true;

@@ -41,10 +41,10 @@ export class TrackingComponent implements OnInit, OnDestroy {
         this.order = data.data!;
     });
     
-    this.orderSocketService.connectToOrder(this.orderId, (orderUpdated) => {
-      this.order = orderUpdated;
+    this.orderSocketService.connectToOrder(this.orderId, (newOrderStatus) => {
+      this.order.status = newOrderStatus.status;
 
-      this.statusMessage = statusMap[orderUpdated.status] || 'Aguardando atualização...';
+      this.statusMessage = statusMap[newOrderStatus.status] || 'Aguardando atualização...';
       if(this.order.status === 'PREPARED'){
         this.orderSocketService.disconnect();
       }

@@ -2,10 +2,10 @@
   <div class="main">
     <h2>Acompanhamento de Pedido</h2>
     <div class="order-tracking" *ngIf="order; else loading">
-      <h3>Status do Pedido #{{ order.id }} - {{ order.status }}</h3>
+      <p class="order-status">Status do Pedido #{{ order.id }} - {{ order.status }}</p>
       <p>{{statusMessage}}</p>
       <p>Detalhes:</p>
-      <ul>
+      <ul class="order-details">
         <li *ngFor="let item of order.cart.items">
           {{ item.quantity }}x {{ item.product.name }}
         </li>

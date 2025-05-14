@@ -18,8 +18,18 @@
     background-color: white;
 }
 .order-tracking{
-    width: 300px;
+    width: 320px;
     height: 230px;
+}
+
+.order-details{
+    height: 100px;
+    overflow-y:scroll;
+}
+
+.order-status{
+    font-size: 16px;
+    font-weight: bolder;
 }
 
 .loading-tracking{
