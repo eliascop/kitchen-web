@@ -34,14 +34,14 @@
 
   <hr>
 
-  <div *ngIf="cartItems.length === 0" style="text-align: center;">
+  <div *ngIf="order.items.length === 0" style="text-align: center;">
     <p>Seu carrinho está vazio.</p>
   </div>
 
   <div>
-    <div *ngIf="cartItems.length > 0" class="cart-container">
+    <div *ngIf="order.items.length > 0" class="cart-container">
       <ul class="cart-list">
-        <li *ngFor="let item of cartItems; let i = index" class="cart-row">
+        <li *ngFor="let item of order.items; let i = index" class="cart-row">
           <div class="cart-detail">
             <div class="cart-info">
               <span>{{i+1}}. </span>
@@ -58,12 +58,12 @@
       </ul>
     </div>
 
-    <div *ngIf="cartItems.length > 0">
+    <div *ngIf="order.items.length > 0">
       <p style="text-align: right;margin-right: 10px;">
-        <strong>Total: </strong>R$ {{ cartTotal | number: '1.2-2' }}
+        <strong>Total: </strong>R$ {{ order.total | number: '1.2-2' }}
       </p>
       <div style="text-align: right;">
-        <button type="button" (click)="submitCart()" class="btn-add-order">Concluir Pedido</button>
+        <button type="button" (click)="submitCart()" class="btn-add-order">Pagar</button>
       </div>
     </div>
   </div>

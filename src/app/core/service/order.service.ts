@@ -3,6 +3,7 @@ import { DataService } from './data.service';
 import { environment } from '../../../environments/environment.dev';
 import { Order } from '../../model/order.model';
 import { AuthService } from './auth.service';
+import { ServiceResponse } from './model/http-options-request.model';
 
 export const ORDER_SERVICE_REST = environment.ORDER_REST_SERVICE;
 
@@ -22,7 +23,7 @@ export class OrderService {
     });
   }
 
-  getOrderById(orderId: number) {
+  getOrderById(orderId: number): ServiceResponse<Order> {
     return this.dataService.get<Order>({
       url: `${ORDER_SERVICE_REST}/${orderId}`
     });

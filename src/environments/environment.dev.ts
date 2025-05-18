@@ -12,5 +12,7 @@ export const environment = {
 
     AUTH_REST_SERVICE: 'http://192.168.15.179:8082/auth',
 
+    PAYMENT_RESET_SERVICE: 'http://192.168.15.179:8082/paypal/payment',
+
     jwtToken: ''
 }

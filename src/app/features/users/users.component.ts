@@ -20,7 +20,9 @@ export class UsersComponent implements OnInit {
   users: User[] = [];
   selectedOrder: any = null;
 
-  constructor(private userService: UserService, private router: Router) {
+  constructor(
+    private userService: UserService, 
+    private router: Router) {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
@@ -37,6 +39,25 @@ export class UsersComponent implements OnInit {
     this.userService.getUsers().subscribe(data => {
       this.users = data.data!;
     });
+  }
+
+  removeUser(userId: number | null): void {
+    if (userId === null) return;
+    
+    const confirmed = window.confirm('Tem certeza de que quer excluir esse usuário ?');
+    if(confirmed){
+      this.userService.deleteUser(userId).subscribe({
+        next: (response) => {
+          this.users = this.users.filter(user => user.id !== userId);
+          alert("Usuário removido com sucesso!");
+          console.log(response);
+        },
+        error: (err) => {
+          alert("Ocorreu um erro ao excluir o usuário.");
+          console.error('Erro ao deletar usuário:', err);
+        }
+      });
+    }
   }
 
   goToNewUser(){

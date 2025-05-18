@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { DataService } from './data.service';
-import { ServiceResponse } from './model/http-options-request.model';
 import { environment } from '../../../environments/environment.dev';
+import { Order } from '../../model/order.model';
 
-export const CART_SERVICE_URL = environment.CART_REST_SERVICE;
+export const PAYMENT_SERVICE_URL = environment.PAYMENT_RESET_SERVICE;
 
 @Injectable({
   providedIn: 'root'
@@ -12,10 +12,10 @@ export class CartService {
 
   constructor(private dataService: DataService) {}
 
-  createCart(cartData: any): ServiceResponse<{orderId: number, message: string }> {
-    return this.dataService.post<{orderId: number, message: string }>({
-      url: CART_SERVICE_URL,
-      body: cartData,
-    });
+  createPayment(order: Order) {
+    return this.dataService.post<{redirect: string}>({
+      url: `${PAYMENT_SERVICE_URL}`,
+      body: order
+    }); 
   }
 }

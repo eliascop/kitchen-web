@@ -47,4 +47,10 @@ export class UserService {
       body: userData,
     });
   }
+
+  deleteUser(userId: number): ServiceResponse<User>{
+    return this.dataService.delete<User>({
+      url: `${USER_REST_SERVICE}/${userId}`
+    });
+  }
 }
