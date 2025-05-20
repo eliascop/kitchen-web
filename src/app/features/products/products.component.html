@@ -8,6 +8,9 @@
         <p class="item-type">Tipo: {{ product.type }}</p>
         <p class="item-total">Preço: <span class="highlight">R$ {{ product.price | number: '1.2-2' }}</span></p>
       </div>
+      <div>
+        <button type="button" (click)="removeProduct(product.id)" class="fa-solid fa-trash"></button>
+      </div>
     </div>
   </div>
   <div *ngIf="products.length == 0" class="no-item">

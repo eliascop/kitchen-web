@@ -49,4 +49,22 @@ export class ProductsComponent implements OnInit {
     this.selectedOrder = null;
   }
   
+  removeProduct(productId: number | null): void {
+    if (productId === null) return;
+    
+    const confirmed = window.confirm('Tem certeza de que quer excluir esse Produto ?');
+    if(confirmed){
+      this.productService.deleteProduct(productId).subscribe({
+        next: (response) => {
+          this.products = this.products.filter(product => product.id !== productId);
+          alert("Produto removido com sucesso!");
+          console.log(response);
+        },
+        error: (err) => {
+          alert("Ocorreu um erro ao excluir o produto.");
+          console.error('Erro ao deletar produto:', err);
+        }
+      });
+    }
+  }
 }

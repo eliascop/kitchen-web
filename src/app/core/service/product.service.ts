@@ -37,4 +37,10 @@ export class ProductService {
       body: productData,
     });
   }
+
+  deleteProduct(id: number): ServiceResponse<Product>{
+    return this.dataService.delete<Product>({
+      url: `${PRODUCT_REST_SERVICE}/${id}`
+    });
+  }
 }
