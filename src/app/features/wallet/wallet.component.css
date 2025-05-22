@@ -1,0 +1,30 @@
+.wallet-container {
+    padding: 2rem;
+    max-width: 500px;
+    margin: auto;
+    background-color: white;
+    border-radius: 6px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+    border: 1px solid #ddd;
+  
+    .form {
+      margin-bottom: 1.5rem;
+      input {
+        margin-right: 0.5rem;
+        padding: 0.3rem;
+      }
+      button {
+        padding: 0.4rem 1rem;
+      }
+    }
+  
+    .transactions ul {
+      list-style: none;
+      padding: 0;
+    }
+  
+    .transactions li {
+      border-bottom: 1px solid #ccc;
+      padding: 0.5rem 0;
+    }
+}

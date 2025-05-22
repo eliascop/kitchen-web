@@ -8,6 +8,7 @@ import { CartService } from '../../core/service/cart.service';
 import { AuthService } from '../../core/service/auth.service';
 import { Order } from '../../model/order.model';
 import { User } from '../../model/user.model';
+import { ActivatedRoute, Route } from '@angular/router';
 
 @Component({
   selector: 'app-cart',
@@ -19,6 +20,7 @@ import { User } from '../../model/user.model';
 })
 export class CartComponent implements OnInit {
 
+  message: string | null = null;
   order: Order = new Order();
   productToSelect!: Product;
   products: Product[] = [];
@@ -33,9 +35,10 @@ export class CartComponent implements OnInit {
   cartForm: FormGroup;
 
   constructor(
+    private authService: AuthService,
     private cartService: CartService,
     private productService: ProductService,
-    private authService: AuthService,
+    private route: ActivatedRoute,
     private fb: FormBuilder
   ) {
     this.cartForm = this.fb.group({
@@ -53,6 +56,19 @@ export class CartComponent implements OnInit {
   ngOnInit() {
     this.order = new Order({ user: new User({ id: this.authService.currentUserId! }) });
     this.onTypeChange();
+
+    this.route.queryParamMap.subscribe(params => {
+      const messageParam = params.get('message');
+      if (messageParam === 'cancelled') {
+        this.message = 'Pagamento cancelado pelo usuário.';
+      } else if (messageParam === 'errortocancel') {
+        this.message = 'Ocorreu um erro ao cancelar pagamento.';
+      }
+
+      if (this.message) {
+        setTimeout(() => this.message = null, 5000);
+      }
+    });
   }
 
   addProductToCart() {

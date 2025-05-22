@@ -1,0 +1,26 @@
+<div class="wallet-container">
+    <div style="display: flex; flex-direction: row; justify-content: space-between;align-items: center;">
+      <h2>Minha Carteira</h2>
+      <span *ngIf="wallet">Meu saldo atual: R$ {{ wallet.balance | number:'1.2-2' }}</span>
+    </div>
+  
+    <div class="form">
+      <h3>Adicionar Saldo</h3>
+      <label for="creditAmount">Valor a ser creditado</label>
+      <input type="number" [(ngModel)]="creditAmount">
+
+      <label for="creditDesc">Uma descrição desse valor</label>
+      <input type="text" [(ngModel)]="creditDesc">
+      <button (click)="credit()">Creditar</button>
+    </div>
+  
+    <div class="transactions">
+      <h3>Transações</h3>
+      <ul>
+        <li *ngFor="let tx of transactions">
+          {{ tx.createdAt | formatDateTime }} - <strong>{{ tx.type }}</strong>: R$ {{ tx.amount | number:'1.2-2' }} ({{ tx.description }})
+        </li>
+      </ul>
+    </div>
+  </div>
+  

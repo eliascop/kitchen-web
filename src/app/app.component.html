@@ -6,6 +6,9 @@
     </div>
     <div *ngIf="user">
       <span class="title-hello">Olá, {{ user.name }}  </span><br>
+      <span *ngIf="balance !== null" class="text-sm">
+        <a href="#" (click)="myWallet($event)" class="logout">Minha carteira: <span class="font-semibold text-green-400">R$ {{ balance | number: '1.2-2' }}</span></a>
+      </span><br>
       <a href="#" (click)="logout($event)" class="logout">Sair</a>
     </div>
   </div>

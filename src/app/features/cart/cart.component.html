@@ -1,3 +1,6 @@
+<div *ngIf="message" class="alert alert-warning">
+  {{ message }}
+</div>
 <div class="cart-form-container">
   <h1 class="title">Menu de opções</h1>
   <form [formGroup]="cartForm">
