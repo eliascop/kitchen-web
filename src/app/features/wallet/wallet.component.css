@@ -8,17 +8,13 @@
     border: 1px solid #ddd;
   
     .form {
-      margin-bottom: 1.5rem;
       input {
         margin-right: 0.5rem;
-        padding: 0.3rem;
-      }
-      button {
-        padding: 0.4rem 1rem;
       }
     }
   
     .transactions ul {
+      font-size: 12px;
       list-style: none;
       padding: 0;
     }

@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ProductService } from '../../core/service/product.service';
 import { CurrencyFormatterPipe } from '../../core/pipes/currency-input.pipe';
 import { Router } from '@angular/router';
+import { ToastService } from '../../core/service/toast.service';
 
 @Component({
   selector: 'app-new-product',
@@ -16,7 +17,7 @@ export class NewProductComponent {
   productForm: FormGroup;
   priceControl = new FormControl('', [Validators.required, Validators.pattern(/^\d+(,\d{1,2})?$/)]);
 
-  constructor(private fb: FormBuilder, private productService: ProductService, private router: Router) {
+  constructor(private fb: FormBuilder, private productService: ProductService, private router: Router, private toast: ToastService) {
     this.productForm = this.fb.group({
       name: ['', Validators.required],
       description: ['', Validators.required],
@@ -40,10 +41,10 @@ export class NewProductComponent {
         next: (res: any) => {
           this.router.navigate(['/products']);
           this.productForm.reset();
-          alert('Produto cadastrado com sucesso.');
+          this.toast.show('Produto cadastrado com sucesso.');
         },
         error: (err) => {
-          alert('Ocorreu um erro ao salvar o produto.');
+          this.toast.show('Ocorreu um erro ao salvar o produto.');
           console.error('Erro ao salvar o produto:', err);
         }
       });

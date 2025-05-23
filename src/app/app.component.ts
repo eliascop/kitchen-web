@@ -5,11 +5,12 @@ import { User } from './model/user.model';
 import { AuthService } from './core/service/auth.service';
 import { UserService } from './core/service/user.service';
 import { WalletService } from './core/service/wallet.service';
+import { ToastComponent } from './shared/components/toast/toast.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet,CommonModule],
+  imports: [RouterOutlet,CommonModule, ToastComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
@@ -57,7 +58,8 @@ export class AppComponent {
   loadBalance(): void {
     this.walletService.getBalance().subscribe({
       next: (value) => {
-        this.balance = value.data!;
+        console.log(value)
+        this.balance = value.data! ?? 0;
       },
       error: (err) => {
         console.error('Erro ao carregar saldo', err);

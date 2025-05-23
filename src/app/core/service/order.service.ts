@@ -28,4 +28,13 @@ export class OrderService {
       url: `${ORDER_SERVICE_REST}/${orderId}`
     });
   }
+
+  
+  createOrder(order: Order) {
+    return this.dataService.post<{orderId: Number, message: string}>({
+      url: `${ORDER_SERVICE_REST}/create`,
+      body: order
+    }); 
+  }
+  
 }

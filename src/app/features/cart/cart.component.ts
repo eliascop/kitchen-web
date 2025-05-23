@@ -4,11 +4,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { Product } from '../../model/product.model';
 import { ProductService } from '../../core/service/product.service';
-import { CartService } from '../../core/service/cart.service';
 import { AuthService } from '../../core/service/auth.service';
 import { Order } from '../../model/order.model';
 import { User } from '../../model/user.model';
-import { ActivatedRoute, Route } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { OrderService } from '../../core/service/order.service';
+import { ToastService } from '../../core/service/toast.service';
 
 @Component({
   selector: 'app-cart',
@@ -36,9 +37,11 @@ export class CartComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private cartService: CartService,
+    private orderService: OrderService,
     private productService: ProductService,
     private route: ActivatedRoute,
+    private router: Router,
+    private toast: ToastService,
     private fb: FormBuilder
   ) {
     this.cartForm = this.fb.group({
@@ -66,7 +69,7 @@ export class CartComponent implements OnInit {
       }
 
       if (this.message) {
-        setTimeout(() => this.message = null, 5000);
+        this.toast.show(this.message);
       }
     });
   }
@@ -96,6 +99,20 @@ export class CartComponent implements OnInit {
   }
 
   submitCart() {
+    this.orderService.createOrder(this.order).subscribe({
+      next: res => {
+        const orderId = res.data!.orderId;
+        this.router.navigate([`/tracking/${orderId}`]);
+      },
+      error: err => {
+        this.toast.show('Ocorreu um erro ao criar o pedido\n' + err.error.error.details);
+        console.error(err);
+      }
+    });
+  }
+
+  /*
+  submitCart() {
     this.cartService.createPayment(this.order).subscribe({
       next: res => {
         const approvalUrl = res.data!.redirect;
@@ -106,7 +123,7 @@ export class CartComponent implements OnInit {
         console.error(err);
       }
     });
-  }
+  }*/
 
   getProductById(productId: number) {
     return this.productService.getProductById(productId);

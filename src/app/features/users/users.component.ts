@@ -5,6 +5,7 @@ import { filter } from 'rxjs';
 import { User } from '../../model/user.model';
 import { UserService } from '../../core/service/user.service';
 import { PhoneNumberPipe } from "../../core/pipes/phone-number.pipe";
+import { ToastService } from '../../core/service/toast.service';
 
 @Component({
   selector: 'app-users',
@@ -22,7 +23,8 @@ export class UsersComponent implements OnInit {
 
   constructor(
     private userService: UserService, 
-    private router: Router) {
+    private router: Router,
+    private toast: ToastService) {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
@@ -49,11 +51,11 @@ export class UsersComponent implements OnInit {
       this.userService.deleteUser(userId).subscribe({
         next: (response) => {
           this.users = this.users.filter(user => user.id !== userId);
-          alert("Usuário removido com sucesso!");
+          this.toast.show("Usuário removido com sucesso!");
           console.log(response);
         },
         error: (err) => {
-          alert("Ocorreu um erro ao excluir o usuário.");
+          this.toast.show("Ocorreu um erro ao excluir o usuário.");
           console.error('Erro ao deletar usuário:', err);
         }
       });

@@ -4,6 +4,7 @@ import { ProductService } from '../../core/service/product.service';
 import { Product } from '../../model/product.model';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
+import { ToastService } from '../../core/service/toast.service';
 
 @Component({
   selector: 'app-products',
@@ -18,7 +19,7 @@ export class ProductsComponent implements OnInit {
   products: Product[] = [];
   selectedOrder: any = null;
 
-  constructor(private productService: ProductService, private router: Router) {
+  constructor(private productService: ProductService, private router: Router, private toast: ToastService) {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
@@ -57,11 +58,11 @@ export class ProductsComponent implements OnInit {
       this.productService.deleteProduct(productId).subscribe({
         next: (response) => {
           this.products = this.products.filter(product => product.id !== productId);
-          alert("Produto removido com sucesso!");
+          this.toast.show("Produto removido com sucesso!");
           console.log(response);
         },
         error: (err) => {
-          alert("Ocorreu um erro ao excluir o produto.");
+          this.toast.show("Ocorreu um erro ao excluir o produto.");
           console.error('Erro ao deletar produto:', err);
         }
       });

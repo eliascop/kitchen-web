@@ -5,6 +5,7 @@ import { UserService } from '../../core/service/user.service';
 import { Router } from '@angular/router';
 import { PasswordInputComponent } from '../../shared/components/password-input/password-input.component';
 import { PhoneNumberPipe } from "../../core/pipes/phone-number.pipe";
+import { ToastService } from '../../core/service/toast.service';
 
 @Component({
   selector: 'app-new-user',
@@ -18,7 +19,7 @@ export class NewUserComponent {
   phoneNumberPipe = new PhoneNumberPipe();
   errorMessage = null;
 
-  constructor(private fb: FormBuilder, private userService: UserService, private router: Router) {
+  constructor(private fb: FormBuilder, private userService: UserService, private router: Router, private toast: ToastService) {
     this.userForm = this.fb.group({
       user: ['', Validators.required],
       name: ['', Validators.required],
@@ -38,7 +39,7 @@ export class NewUserComponent {
         next: (res: any) => {
           this.router.navigate(['/login']);
           this.userForm.reset();
-          alert('Usuário cadatrado com sucesso.');
+          this.toast.show('Usuário cadatrado com sucesso.');
         },
         error: (err) => {
           console.log(err.error);
