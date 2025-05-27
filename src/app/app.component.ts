@@ -40,6 +40,10 @@ export class AppComponent {
         this.user = undefined!;
       }
     });
+
+    this.walletService.balance$.subscribe(balance => {
+      this.balance = balance;
+    });
   }
   goHome(event?: Event) {
     if (event) {
@@ -57,9 +61,8 @@ export class AppComponent {
 
   loadBalance(): void {
     this.walletService.getBalance().subscribe({
-      next: (value) => {
-        console.log(value)
-        this.balance = value.data! ?? 0;
+      next: (balance) => {
+        this.balance = balance;
       },
       error: (err) => {
         console.error('Erro ao carregar saldo', err);

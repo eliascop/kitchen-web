@@ -59,7 +59,6 @@ export class ProductsComponent implements OnInit {
         next: (response) => {
           this.products = this.products.filter(product => product.id !== productId);
           this.toast.show("Produto removido com sucesso!");
-          console.log(response);
         },
         error: (err) => {
           this.toast.show("Ocorreu um erro ao excluir o produto.");

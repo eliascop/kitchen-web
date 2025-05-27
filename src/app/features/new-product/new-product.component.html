@@ -31,18 +31,12 @@
 
         <div class="form-group">
             <label for="price">Preço:</label>
-            <input
-                type="text"
+            <app-currency-input
                 id="price"
+                formControlName="price"
                 class="price"
-                [formControl]="priceControl"
-                [value]="priceControl.value | currencyFormatter"
-                (input)="priceControl.setValue($any($event.target).value)"
-            />
-            <div *ngIf="priceControl.invalid && (priceControl.dirty || priceControl.touched)" class="error-message">
-                <div *ngIf="priceControl.errors?.['required']">Preço é obrigatório.</div>
-                <div *ngIf="priceControl.errors?.['pattern']">Preço inválido. Use apenas números e vírgula (,) para casas decimais.</div>
-            </div>
+                [required]="true">
+            </app-currency-input>
         </div>
 
         <button type="submit" [disabled]="productForm.invalid" class="submit-button">Salvar</button>

@@ -42,7 +42,6 @@ export class NewUserComponent {
           this.toast.show('Usuário cadatrado com sucesso.');
         },
         error: (err) => {
-          console.log(err.error);
           this.errorMessage = err.error?.error || 'Erro ao efetuar login';
         }
       });

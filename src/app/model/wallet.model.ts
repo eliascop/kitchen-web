@@ -10,6 +10,7 @@ export interface Wallet {
     type: 'CREDIT' | 'DEBIT';
     description: string;
     createdAt: string;
+    status: string;
   }
   
   export interface CreditRequest {

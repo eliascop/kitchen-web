@@ -34,7 +34,6 @@ export class LoginComponent {
         this.router.navigate(['/']);
       },
       error: (err) => {
-        console.log(err.error);
         this.errorMessage = err.error?.error || 'Erro ao efetuar login';
       }
     });

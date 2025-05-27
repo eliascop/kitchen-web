@@ -6,7 +6,7 @@ export class ToastService {
   private messageSubject = new BehaviorSubject<string | null>(null);
   message$ = this.messageSubject.asObservable();
 
-  show(message: string, duration: number = 3000) {
+  show(message: string, duration: number = 10000) {
     this.messageSubject.next(message);
     setTimeout(() => this.clear(), duration);
   }

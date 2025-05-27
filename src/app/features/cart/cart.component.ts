@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
+import { CommonModule, CurrencyPipe } from '@angular/common';
 import { Product } from '../../model/product.model';
 import { ProductService } from '../../core/service/product.service';
 import { AuthService } from '../../core/service/auth.service';
 import { Order } from '../../model/order.model';
 import { User } from '../../model/user.model';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { OrderService } from '../../core/service/order.service';
 import { ToastService } from '../../core/service/toast.service';
 
@@ -39,7 +39,6 @@ export class CartComponent implements OnInit {
     private authService: AuthService,
     private orderService: OrderService,
     private productService: ProductService,
-    private route: ActivatedRoute,
     private router: Router,
     private toast: ToastService,
     private fb: FormBuilder
@@ -59,19 +58,6 @@ export class CartComponent implements OnInit {
   ngOnInit() {
     this.order = new Order({ user: new User({ id: this.authService.currentUserId! }) });
     this.onTypeChange();
-
-    this.route.queryParamMap.subscribe(params => {
-      const messageParam = params.get('message');
-      if (messageParam === 'cancelled') {
-        this.message = 'Pagamento cancelado pelo usuário.';
-      } else if (messageParam === 'errortocancel') {
-        this.message = 'Ocorreu um erro ao cancelar pagamento.';
-      }
-
-      if (this.message) {
-        this.toast.show(this.message);
-      }
-    });
   }
 
   addProductToCart() {
@@ -103,6 +89,7 @@ export class CartComponent implements OnInit {
       next: res => {
         const orderId = res.data!.orderId;
         this.router.navigate([`/tracking/${orderId}`]);
+        this.toast.show(`Compra realizada com sucesso!\nFoi debitado da carteira o valor R$ ${this.order.total || CurrencyPipe}`);
       },
       error: err => {
         this.toast.show('Ocorreu um erro ao criar o pedido\n' + err.error.error.details);
@@ -110,20 +97,6 @@ export class CartComponent implements OnInit {
       }
     });
   }
-
-  /*
-  submitCart() {
-    this.cartService.createPayment(this.order).subscribe({
-      next: res => {
-        const approvalUrl = res.data!.redirect;
-        window.location.href = approvalUrl;
-      },
-      error: err => {
-        alert('Erro ao iniciar pagamento: ' + err);
-        console.error(err);
-      }
-    });
-  }*/
 
   getProductById(productId: number) {
     return this.productService.getProductById(productId);

@@ -1,26 +1,36 @@
 <div class="wallet-container">
-    <div style="display: flex; flex-direction: row; justify-content: space-between;align-items: center;">
-      <h2>Minha Carteira</h2>
-      <span *ngIf="wallet">Meu saldo atual: R$ {{ wallet.balance | number:'1.2-2' }}</span>
-    </div>
-  
-    <div class="form">
-      <h3>Adicionar Saldo</h3>
+  <div style="display: flex; justify-content: space-between; align-items: center;">
+    <h2>Minha Carteira</h2>
+    <span *ngIf="wallet">Meu saldo atual: R$ {{ wallet.balance | number:'1.2-2' }}</span>
+  </div>
+
+  <div class="login-form">
+    <h3>Adicionar Saldo</h3>
+    <form [formGroup]="walletForm" (ngSubmit)="credit()">
+      
       <label for="creditAmount">Valor a ser creditado</label>
-      <input type="number" [(ngModel)]="creditAmount">
+      <app-currency-input
+        formControlName="amount"
+        [required]="true">
+      </app-currency-input>
 
       <label for="creditDesc">Uma descrição desse valor</label>
-      <input type="text" [(ngModel)]="creditDesc">
-      <button type="submit" class="submit-button" (click)="credit()">Creditar</button>
-    </div>
-  
-    <div class="transactions">
-      <h3>Transações</h3>
-      <ul>
-        <li *ngFor="let tx of transactions">
-          {{ tx.createdAt | formatDateTime }} - <strong>{{ tx.type }}</strong>: R$ {{ tx.amount | number:'1.2-2' }} ({{ tx.description }})
-        </li>
-      </ul>
-    </div>
+      <input id="creditDesc" type="text" formControlName="description">
+      <div class="error" *ngIf="walletForm.get('description')?.hasError('required') && walletForm.get('description')?.touched">
+        Descrição é obrigatória.
+      </div>
+
+      <button type="submit" class="submit-button" [disabled]="walletForm.invalid">Creditar</button>
+    </form>
   </div>
-  
+
+  <div class="transactions">
+    <h3>Transações</h3>
+    <ul>
+      <li *ngFor="let tx of transactions">
+        {{ tx.createdAt | formatDateTime }} - <strong>{{ tx.type }}</strong> - 
+        <strong>{{ tx.status }}</strong>: R$ {{ tx.amount | number:'1.2-2' }} ({{ tx.description }})
+      </li>
+    </ul>
+  </div>
+</div>

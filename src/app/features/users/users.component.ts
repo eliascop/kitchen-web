@@ -52,7 +52,6 @@ export class UsersComponent implements OnInit {
         next: (response) => {
           this.users = this.users.filter(user => user.id !== userId);
           this.toast.show("Usuário removido com sucesso!");
-          console.log(response);
         },
         error: (err) => {
           this.toast.show("Ocorreu um erro ao excluir o usuário.");
