@@ -3,7 +3,7 @@ import { map } from 'rxjs';
 import { DataService } from './data.service';
 import { ServiceResponse } from './model/http-options-request.model';
 import { environment } from '../../../environments/environment.dev';
-import { User } from '../../model/user.model';
+import { User } from '../model/user.model';
 
 export const AUTH_REST_SERVICE = environment.AUTH_REST_SERVICE;
 export const USER_REST_SERVICE = environment.USER_REST_SERVICE;

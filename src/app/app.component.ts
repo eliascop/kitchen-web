@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { User } from './model/user.model';
+import { User } from './core/model/user.model';
 import { AuthService } from './core/service/auth.service';
 import { UserService } from './core/service/user.service';
 import { WalletService } from './core/service/wallet.service';

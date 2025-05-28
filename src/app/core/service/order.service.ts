@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { DataService } from './data.service';
 import { environment } from '../../../environments/environment.dev';
-import { Order } from '../../model/order.model';
+import { Order } from '../model/order.model';
 import { AuthService } from './auth.service';
 import { ServiceResponse } from './model/http-options-request.model';
 

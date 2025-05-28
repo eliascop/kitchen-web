@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CreditRequest, DebitRequest, Wallet, WalletTransaction } from '../../model/wallet.model';
+import { CreditRequest, DebitRequest, Wallet, WalletTransaction } from '../model/wallet.model';
 import { environment } from '../../../environments/environment.dev';
 import { DataService } from './data.service';
 import { ServiceResponse } from './model/http-options-request.model';

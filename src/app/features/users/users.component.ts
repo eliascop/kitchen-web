@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
-import { User } from '../../model/user.model';
+import { User } from '../../core/model/user.model';
 import { UserService } from '../../core/service/user.service';
 import { PhoneNumberPipe } from "../../core/pipes/phone-number.pipe";
 import { ToastService } from '../../core/service/toast.service';

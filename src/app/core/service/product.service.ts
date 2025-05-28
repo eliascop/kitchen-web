@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ServiceResponse } from './model/http-options-request.model';
 import { DataService } from './data.service';
 import { environment } from '../../../environments/environment.dev';
-import { Product } from '../../model/product.model';
+import { Product } from '../model/product.model';
 
 export const PRODUCT_REST_SERVICE = environment.PRODUCT_REST_SERVICE;
 

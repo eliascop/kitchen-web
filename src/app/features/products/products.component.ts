@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductService } from '../../core/service/product.service';
-import { Product } from '../../model/product.model';
+import { Product } from '../../core/model/product.model';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
 import { ToastService } from '../../core/service/toast.service';

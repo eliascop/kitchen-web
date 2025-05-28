@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Order } from '../../model/order.model';
+import { Order } from '../../core/model/order.model';
 import { CommonModule } from '@angular/common';
 import { OrderSocketService } from '../../core/service/order.socket.service';
 import { OrderService } from '../../core/service/order.service';

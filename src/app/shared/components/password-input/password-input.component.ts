@@ -38,10 +38,6 @@ export class PasswordInputComponent implements ControlValueAccessor {
     this.onTouched = fn;
   }
 
-  setDisabledState?(isDisabled: boolean): void {
-    // Implemente se precisar desabilitar o input
-  }
-
   togglePasswordVisibility() {
     this.passwordVisible = !this.passwordVisible;
   }

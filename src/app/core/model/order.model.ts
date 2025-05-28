@@ -46,7 +46,7 @@ export class Order {
   addItem(product: Product, quantity: number): void {
     const existing = this.items.find(i => i.product.id === product.id);
     if (existing) {
-      existing.quantity += quantity;
+      existing.quantity += Number(quantity);
       existing.value = existing.product.price * existing.quantity;
     } else {
       this.items.push(new OrderItem({ product, quantity, value: product.price * quantity }));

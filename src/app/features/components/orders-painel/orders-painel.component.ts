@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Order } from '../../model/order.model';
-import { environment } from '../../../environments/environment.dev';
-import { OrderSocketService } from '../../core/service/order.socket.service';
-import { OrderService } from '../../core/service/order.service';
-import { FormatDateTimePipe } from "../../core/pipes/format-date-time.pipe";
+import { environment } from '../../../../environments/environment.dev';
+import { FormatDateTimePipe } from '../../../core/pipes/format-date-time.pipe';
+import { Order } from '../../../core/model/order.model';
+import { OrderService } from '../../../core/service/order.service';
+import { OrderSocketService } from '../../../core/service/order.socket.service';
 
 export const ORDER_SOCKET_SERVICE = environment.ORDER_SOCKET_SERVICE;
 

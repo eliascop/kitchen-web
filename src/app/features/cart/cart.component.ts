@@ -2,14 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule, CurrencyPipe } from '@angular/common';
-import { Product } from '../../model/product.model';
+import { Product } from '../../core/model/product.model';
 import { ProductService } from '../../core/service/product.service';
 import { AuthService } from '../../core/service/auth.service';
-import { Order } from '../../model/order.model';
-import { User } from '../../model/user.model';
+import { Order } from '../../core/model/order.model';
+import { User } from '../../core/model/user.model';
 import { Router } from '@angular/router';
 import { OrderService } from '../../core/service/order.service';
 import { ToastService } from '../../core/service/toast.service';
+import { WalletService } from '../../core/service/wallet.service';
 
 @Component({
   selector: 'app-cart',
@@ -39,6 +40,7 @@ export class CartComponent implements OnInit {
     private authService: AuthService,
     private orderService: OrderService,
     private productService: ProductService,
+    private walletService: WalletService,
     private router: Router,
     private toast: ToastService,
     private fb: FormBuilder
@@ -88,6 +90,7 @@ export class CartComponent implements OnInit {
     this.orderService.createOrder(this.order).subscribe({
       next: res => {
         const orderId = res.data!.orderId;
+        this.walletService.refreshBalance();
         this.router.navigate([`/tracking/${orderId}`]);
         this.toast.show(`Compra realizada com sucesso!\nFoi debitado da carteira o valor R$ ${this.order.total || CurrencyPipe}`);
       },

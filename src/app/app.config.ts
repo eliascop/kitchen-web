@@ -3,6 +3,7 @@ import { provideRouter } from '@angular/router';
 import { provideHttpClient, withInterceptorsFromDi, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpInterceptorService } from './core/interceptors/http-interceptor.service';
 import { AuthGuardService } from './core/service/auth.guard.service';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 import { LoginComponent } from './features/login/login.component';
 import { HomeComponent } from './features/home/home.component';
@@ -13,8 +14,8 @@ import { ProductsComponent } from './features/products/products.component';
 import { NewProductComponent } from './features/new-product/new-product.component';
 import { TrackingComponent } from './features/tracking/tracking.component';
 import { NewUserComponent } from './features/new-user/new-user.component';
-import { OrdersPainelComponent } from './features/orders-painel/orders-painel.component';
 import { WalletComponent } from './features/wallet/wallet.component';
+import { OrdersPainelComponent } from './features/components/orders-painel/orders-painel.component';
 
 export const routes = [
   { path: 'login', component: LoginComponent },
@@ -36,6 +37,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideHttpClient(withInterceptorsFromDi()),
     provideRouter(routes),
+    provideAnimations(),
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpInterceptorService,
