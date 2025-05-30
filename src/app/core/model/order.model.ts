@@ -23,7 +23,7 @@ export class Order {
   public blink: boolean = false;
   public items: OrderItem[] = [];
   public total: number = 0;
-  public status: string = 'AWAITING_PAYMENT';
+  public status: string = 'PENDING';
   public creation: Date = new Date();
   public paymentId?: string;
 
