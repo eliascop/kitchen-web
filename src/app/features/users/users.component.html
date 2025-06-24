@@ -2,7 +2,7 @@
 <div *ngIf="users.length > 0" class="item-container">
     <div *ngFor="let user of users" class="item-card">
         <div class="item-details">
-          <p class="item-id">Usuário: {{ user.id }}. {{ user.user }}</p>
+          <p class="item-id">Usuário: {{ user.id }}. {{ user.login }}</p>
           <p class="item-description">Nome: {{ user.name }}</p>
           <p class="item-type">Email: {{ user.email }}</p>
           <p class="item-total">Telefone: {{user.phone | phoneNumber}}</p>

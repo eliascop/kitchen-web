@@ -21,7 +21,7 @@ export class NewUserComponent {
 
   constructor(private fb: FormBuilder, private userService: UserService, private router: Router, private toast: ToastService) {
     this.userForm = this.fb.group({
-      user: ['', Validators.required],
+      login: ['', Validators.required],
       name: ['', Validators.required],
       phone: ['', Validators.required],
       email: ['', Validators.required],

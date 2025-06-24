@@ -1,6 +1,6 @@
 export class User{
     public id: number | null = null;
-    public user: string = '';
+    public login: string = '';
     public name: string = '';
     public phone: string = '';
     public profile: number | null = null;

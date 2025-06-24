@@ -8,7 +8,7 @@ export const environment = {
     
     ORDER_SOCKET_SERVICE: 'http://localhost:8085/ws/orders/v1',
 
-    PAYMENT_REST_SERVICE: 'http://localhost:8082/paypal/payment',
+    PAYMENT_REST_SERVICE: 'http://localhost:8082/payment/paypal',
     
     PRODUCT_REST_SERVICE: 'http://localhost:8082/products/v1',
 
